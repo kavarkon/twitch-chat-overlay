@@ -6,81 +6,91 @@ const BOT_USERNAME = "";
 const OAUTH_TOKEN = "";
 const CHANNEL_NAME = "";
 
+const RECONNECT_DELAY = 5000;
+
+const DISPLAY_NAME_PATTERN = /display-name=([^;]*)/;
+const PRIVATE_MESSAGE_PATTERN = /PRIVMSG #[^ ]+ :(.*)$/;
+
+let socket = null;
+
 function connect() {
-    return new WebSocket(WEBSOCKET_URL);
+    if (socket && socket.readyState !== WebSocket.CLOSED) {
+        return;
+    }
+
+    socket = new WebSocket(WEBSOCKET_URL);
+
+    socket.addEventListener("open", handleOpen);
+    socket.addEventListener("message", handleMessage);
+    socket.addEventListener("close", handleClose);
+    socket.addEventListener("error", handleError);
 }
 
-function authenticate(socket) {
+function authenticate() {
     socket.send(`PASS oauth:${OAUTH_TOKEN}`);
     socket.send(`NICK ${BOT_USERNAME}`);
     socket.send(`JOIN #${CHANNEL_NAME}`);
 }
 
-function handleOpen(socket) {
-    authenticate(socket);
+function handleOpen() {
+    authenticate();
+}
+
+function handleMessage(event) {
+    const messages = event.data
+        .split("\r\n")
+        .filter(Boolean);
+
+    for (const message of messages) {
+        handleIrcMessage(message);
+    }
+}
+
+function handleIrcMessage(message) {
+    if (message.startsWith("PING")) {
+        socket.send("PONG :tmi.twitch.tv");
+        return;
+    }
+
+    const privateMessageMatch = message.match(PRIVATE_MESSAGE_PATTERN);
+
+    if (!privateMessageMatch) {
+        return;
+    }
+
+    parsePrivateMessage(
+        message,
+        privateMessageMatch
+    );
+}
+
+function parsePrivateMessage(message, privateMessageMatch) {
+    const nicknameMatch = message.match(DISPLAY_NAME_PATTERN);
+
+    if (!nicknameMatch) {
+        return;
+    }
+
+    addMessage(
+        nicknameMatch[1],
+        privateMessageMatch[1]
+    );
 }
 
 function handleClose() {
     console.log("Disconnected from Twitch.");
+
+    socket = null;
+
+    setTimeout(connect, RECONNECT_DELAY);
 }
 
 function handleError(error) {
     console.error(error);
 }
 
-function handleMessage(event, socket) {
-    const message = event.data;
-
-    if (message.startsWith("PING")) {
-        socket.send("PONG :tmi.twitch.tv");
-        return;
-    }
-
-    if (!message.includes("PRIVMSG")) {
-        return;
-    }
-
-    const parsedMessage = parseMessage(message);
-
-    if (!parsedMessage) {
-        return;
-    }
-
-    addMessage(
-        parsedMessage.nickname,
-        parsedMessage.text
-    );
-}
-
-function parseMessage(message) {
-    const nicknameMatch = message.match(/display-name=([^;]*)/);
-
-    const textMatch = message.match(/PRIVMSG #[^ ]+ :(.*)$/);
-
-    if (!nicknameMatch || !textMatch) {
-        return null;
-    }
-
-    return {
-        nickname: nicknameMatch[1],
-        text: textMatch[1]
-    };
-}
-
 function startChat() {
-    const socket = connect();
-
-    socket.addEventListener("open", () => {
-        handleOpen(socket);
-    });
-
-    socket.addEventListener("message", (event) => {
-        handleMessage(event, socket);
-    });
-
-    socket.addEventListener("close", handleClose);
-
-    socket.addEventListener("error", handleError);
+    connect();
 }
 
 export { startChat };
