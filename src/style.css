@@ -33,7 +33,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    gap: 10px;
+    gap: 6px;
 
     box-sizing: border-box;
 }
@@ -61,7 +61,7 @@ body {
 }
 
 .message__nickname {
-    color: darkgray;
+    color: black;
 
     margin-right: 8px;
 
