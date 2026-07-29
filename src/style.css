@@ -23,6 +23,7 @@ body {
 
 .chat {
     position: absolute;
+    width: 50%;
 
     left: 7px;
     /* right: 20px; */
@@ -43,7 +44,6 @@ body {
     display: inline-block;
 
     width: fit-content;
-    max-width: 50%;
 
     padding: 1px 3px;
 
