@@ -1,10 +1,3 @@
-import { getAccessToken, login } from "./auth";
-import { startChat } from "./twitch";
+import { startChat } from "./js/twitch";
 
-const accessToken = getAccessToken();
-
-if (!accessToken) {
-    login();
-} else {
-    startChat(accessToken);
-}
+startChat();
