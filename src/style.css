@@ -53,22 +53,6 @@ body {
 
     background: rgba(0, 0, 0, 0.45);
 
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        black 18px,
-        black calc(100% - 18px),
-        transparent 100%
-    );
-
-    mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        black 18px,
-        black calc(100% - 18px),
-        transparent 100%
-    );
-
     /* color: white; */
 
     line-height: 1.45;
