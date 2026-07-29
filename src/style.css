@@ -42,7 +42,8 @@ body {
 .message {
     display: inline-block;
 
-    max-width: 50%;
+    width: fit-content;
+    width: 50%;
 
     padding: 1px 3px;
 
