@@ -24,12 +24,13 @@ body {
 .chat {
     position: absolute;
 
-    height: 80%;
+    height: 81%;
     width: 50%;
 
     left: 6px;
     /* right: 20px; */
     bottom: 0;
+  padding-top: 1px;
 
     display: flex;
     flex-direction: column;
