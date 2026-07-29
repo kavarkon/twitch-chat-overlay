@@ -47,13 +47,13 @@ body {
 
     max-width: min(700px, 100%);
 
-    padding: 10px 14px;
+    padding: 5px 7px;
 
     border-radius: 12px;
 
     background: rgba(0, 0, 0, 0.45);
 
-    color: white;
+    /* color: white; */
 
     line-height: 1.45;
 
@@ -61,6 +61,8 @@ body {
 }
 
 .message__nickname {
+    color: darkgray;
+
     margin-right: 8px;
 
     font-weight: 700;
