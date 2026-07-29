@@ -1,6 +1,6 @@
 const chat = document.querySelector(".chat");
 
-const MAX_MESSAGES = 50;
+const MAX_MESSAGES = 7;
 
 function addMessage(nickname, text) {
     const message = document.createElement("div");

@@ -1,44 +1,90 @@
 html,
 body {
+    width: 100%;
+    height: 100%;
+
     margin: 0;
     padding: 0;
-}
 
-body {
     overflow: hidden;
 
     background: transparent;
+}
 
-    font-family: sans-serif;
+body {
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    color: white;
 }
 
 .chat {
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+
     display: flex;
     flex-direction: column;
 
-    gap: 12px;
-
-    padding: 20px;
+    gap: 10px;
 
     box-sizing: border-box;
 }
 
 .message {
-    display: flex;
+    display: inline-flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
 
-    align-items: baseline;
+    align-self: flex-start;
 
-    gap: 8px;
+    max-width: min(700px, 100%);
 
-    word-break: break-word;
+    padding: 10px 14px;
+
+    border-radius: 12px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    color: white;
+
+    line-height: 1.45;
+
+    animation: message-appear 220ms ease-out;
 }
 
 .message__nickname {
-    font-weight: bold;
+    margin-right: 8px;
+
+    font-weight: 700;
 
     white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
 .message__text {
+    color: white;
+
     overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+@keyframes message-appear {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
