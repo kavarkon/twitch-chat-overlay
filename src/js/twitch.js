@@ -2,9 +2,8 @@ import { addMessage } from "./chat";
 
 const WEBSOCKET_URL = "wss://irc-ws.chat.twitch.tv:443";
 
-const BOT_USERNAME = "";
-const OAUTH_TOKEN = "";
-const CHANNEL_NAME = "";
+const BOT_USERNAME = "kavarkon";
+const CHANNEL_NAME = "kavarkon";
 
 const RECONNECT_DELAY = 5000;
 
@@ -12,6 +11,7 @@ const DISPLAY_NAME_PATTERN = /display-name=([^;]*)/;
 const PRIVATE_MESSAGE_PATTERN = /PRIVMSG #[^ ]+ :(.*)$/;
 
 let socket = null;
+let accessToken = "";
 
 function connect() {
     if (socket && socket.readyState !== WebSocket.CLOSED) {
@@ -27,7 +27,7 @@ function connect() {
 }
 
 function authenticate() {
-    socket.send(`PASS oauth:${OAUTH_TOKEN}`);
+    socket.send(`PASS oauth:${accessToken}`);
     socket.send(`NICK ${BOT_USERNAME}`);
     socket.send(`JOIN #${CHANNEL_NAME}`);
 }
@@ -89,7 +89,8 @@ function handleError(error) {
     console.error(error);
 }
 
-function startChat() {
+function startChat(token) {
+    accessToken = token;
     connect();
 }
 
