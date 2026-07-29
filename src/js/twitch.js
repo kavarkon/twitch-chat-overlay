@@ -5,7 +5,7 @@ const WEBSOCKET_URL = "wss://irc-ws.chat.twitch.tv:443";
 const BOT_USERNAME = "kavarkon";
 const CHANNEL_NAME = "kavarkon";
 
-const OAUTH_TOKEN = g7t8hdrpmlm59mrs8674ubu4uap1gp
+const OAUTH_TOKEN = "g7t8hdrpmlm59mrs8674ubu4uap1gp"
 
 const RECONNECT_DELAY = 5000;
 
