@@ -1,3 +1,3 @@
-import { startChat } from "./js/twitch.js";
+import { startChat } from "./twitch";
 
 startChat();
