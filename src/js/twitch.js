@@ -33,10 +33,12 @@ function authenticate() {
 }
 
 function handleOpen() {
+    console.log(event.data);
     authenticate();
 }
 
 function handleMessage(event) {
+    console.log(event.data);
     const messages = event.data
         .split("\r\n")
         .filter(Boolean);
@@ -78,6 +80,11 @@ function parsePrivateMessage(message, privateMessageMatch) {
 }
 
 function handleClose() {
+    console.log(
+        "Disconnected from Twitch.",
+        event.code,
+        event.reason
+    );
     console.log("Disconnected from Twitch.");
 
     socket = null;
