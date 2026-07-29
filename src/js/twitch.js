@@ -27,6 +27,9 @@ function connect() {
 }
 
 function authenticate() {
+    socket.send(
+        "CAP REQ :twitch.tv/tags twitch.tv/commands"
+    );
     socket.send(`PASS oauth:${accessToken}`);
     socket.send(`NICK ${BOT_USERNAME}`);
     socket.send(`JOIN #${CHANNEL_NAME}`);
@@ -49,6 +52,7 @@ function handleMessage(event) {
 }
 
 function handleIrcMessage(message) {
+    console.log(message);
     if (message.startsWith("PING")) {
         socket.send("PONG :tmi.twitch.tv");
         return;
