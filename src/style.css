@@ -44,7 +44,7 @@ body {
     align-items: flex-start;
     flex-wrap: wrap;
 
-    max-width: min(700px, 100%);
+    max-width: 50%;
 
     padding: 1px 3px;
 
@@ -60,7 +60,7 @@ body {
 }
 
 .message__nickname {
-    color: black;
+    color: #BAD1B7;
 
     margin-right: 4px;
 
@@ -81,7 +81,7 @@ body {
 @keyframes message-appear {
     from {
         opacity: 0;
-        transform: translateY(14px);
+        transform: translateY(8px);
     }
 
     to {
