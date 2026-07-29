@@ -43,7 +43,7 @@ body {
     display: inline-block;
 
     width: fit-content;
-    width: 50%;
+    max-width: 50%;
 
     padding: 1px 3px;
 
