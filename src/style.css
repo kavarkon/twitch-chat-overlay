@@ -66,6 +66,7 @@ body {
 
 .message__text {
     color: white;
+    overflow-wrap: anywhere;
 }
 
 @keyframes message-appear {
