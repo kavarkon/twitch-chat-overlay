@@ -1,6 +1,7 @@
 const chat = document.querySelector(".chat");
 
 const MAX_MESSAGES = 7;
+const MESSAGE_LIFETIME = 180000;
 
 function addMessage(nickname, text) {
     const message = document.createElement("div");
@@ -18,6 +19,10 @@ function addMessage(nickname, text) {
     message.append(textElement);
 
     chat.append(message);
+
+    setTimeout(() => {
+        message.remove();
+    }, MESSAGE_LIFETIME);
 
     if (chat.children.length > MAX_MESSAGES) {
         chat.firstElementChild.remove();
