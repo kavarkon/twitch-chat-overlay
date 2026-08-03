@@ -1,4 +1,8 @@
+import notificationSoundFile from "/sounds/message.ogg";
+
 const chat = document.querySelector(".chat");
+
+const notificationSound = new Audio(notificationSoundFile);
 
 const MAX_MESSAGES = 7;
 const MESSAGE_LIFETIME = 180000;
@@ -24,6 +28,11 @@ function addMessage(nickname, text, emotes) {
     message.append(textElement);
 
     chat.append(message);
+
+    notificationSound.currentTime = 0;
+
+    notificationSound.play().catch(() => {
+    });
 
     setTimeout(() => {
         message.remove();
