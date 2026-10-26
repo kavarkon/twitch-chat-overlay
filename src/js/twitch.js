@@ -5,8 +5,6 @@ const WEBSOCKET_URL = "wss://irc-ws.chat.twitch.tv:443";
 const BOT_USERNAME = "kavarkon";
 const CHANNEL_NAME = "kavarkon";
 
-const OAUTH_TOKEN = "g7t8hdrpmlm59mrs8674ubu4uap1gp";
-
 const RECONNECT_DELAY = 5000;
 
 const DISPLAY_NAME_PATTERN = /display-name=([^;]*)/;
@@ -14,6 +12,7 @@ const EMOTES_PATTERN = /emotes=([^;]*)/;
 const PRIVATE_MESSAGE_PATTERN = /PRIVMSG #[^ ]+ :(.*)$/;
 
 let socket = null;
+let oauthToken = null;
 
 function connect() {
     if (socket && socket.readyState !== WebSocket.CLOSED) {
@@ -33,7 +32,7 @@ function authenticate() {
         "CAP REQ :twitch.tv/tags twitch.tv/commands"
     );
 
-    socket.send(`PASS oauth:${OAUTH_TOKEN}`);
+    socket.send(`PASS oauth:${oauthToken}`);
     socket.send(`NICK ${BOT_USERNAME}`);
     socket.send(`JOIN #${CHANNEL_NAME}`);
 }
@@ -98,7 +97,8 @@ function handleError(error) {
     console.error(error);
 }
 
-function startChat() {
+function startChat(accessToken) {
+    oauthToken = accessToken;
     connect();
 }
 
